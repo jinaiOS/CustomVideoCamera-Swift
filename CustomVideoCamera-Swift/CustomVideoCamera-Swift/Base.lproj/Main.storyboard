@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -33,6 +34,9 @@
                                     <imageReference key="image" image="lightbulb.slash" catalog="system" symbolScale="default"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
+                                <connections>
+                                    <action selector="lightButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UmW-l6-eB3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yei-Re-e8b">
                                 <rect key="frame" x="313" y="59" width="80" height="80"/>
@@ -45,9 +49,12 @@
                                 <state key="selected" image="ellipsis" catalog="system"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPh-ff-QPp">
-                                <rect key="frame" x="159" y="703" width="75" height="35"/>
+                                <rect key="frame" x="157.33333333333334" y="703" width="78.333333333333343" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Rj-mX-Lvr"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ws-pU-Ogg">
                                 <rect key="frame" x="313" y="738" width="80" height="80"/>
@@ -57,6 +64,9 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="goforward" catalog="system"/>
+                                <connections>
+                                    <action selector="screenTransitionButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RuY-bF-6bf"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PVg-9H-hUj">
                                 <rect key="frame" x="20" y="718" width="80" height="80"/>
@@ -85,6 +95,10 @@
                             <constraint firstItem="PVg-9H-hUj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="viq-fT-wxl"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imgGallery" destination="PVg-9H-hUj" id="v03-4p-nli"/>
+                        <outlet property="vScreen" destination="gv2-ZH-kzg" id="Rey-aS-FEq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

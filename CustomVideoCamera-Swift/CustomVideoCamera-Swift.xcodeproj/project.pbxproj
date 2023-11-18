@@ -16,6 +16,7 @@
 		568CF82E2B0394B100AD978A /* CustomVideoCamera_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CF82D2B0394B100AD978A /* CustomVideoCamera_SwiftTests.swift */; };
 		568CF8382B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CF8372B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift */; };
 		568CF83A2B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CF8392B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift */; };
+		56E65FFD2B088FC90087669E /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E65FFC2B088FC90087669E /* EditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		568CF8332B0394B100AD978A /* CustomVideoCamera-SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CustomVideoCamera-SwiftUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		568CF8372B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoCamera_SwiftUITests.swift; sourceTree = "<group>"; };
 		568CF8392B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoCamera_SwiftUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		56E65FFC2B088FC90087669E /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				568CF8182B0394AF00AD978A /* SceneDelegate.swift */,
 				568CF81A2B0394AF00AD978A /* ViewController.swift */,
 				568CF81C2B0394AF00AD978A /* Main.storyboard */,
+				56E65FFC2B088FC90087669E /* EditViewController.swift */,
 				568CF81F2B0394B100AD978A /* Assets.xcassets */,
 				568CF8212B0394B100AD978A /* LaunchScreen.storyboard */,
 				568CF8242B0394B100AD978A /* Info.plist */,
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56E65FFD2B088FC90087669E /* EditViewController.swift in Sources */,
 				568CF81B2B0394AF00AD978A /* ViewController.swift in Sources */,
 				568CF8172B0394AF00AD978A /* AppDelegate.swift in Sources */,
 				568CF8192B0394AF00AD978A /* SceneDelegate.swift in Sources */,

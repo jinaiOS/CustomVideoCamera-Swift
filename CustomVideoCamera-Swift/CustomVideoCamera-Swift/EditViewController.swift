@@ -6,105 +6,109 @@
 //
 
 import UIKit
+import AVFoundation
 
 class EditViewController: UIViewController {
-//https://github.com/Tomohiro-Yamashita/VideoTimelineView.git
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        ///Prepare videoTimelineView
-        let asset = AVAsset(url: URL(fileURLWithPath: Bundle.main.path(forResource: "movie", ofType:"mov")!))
-        
-        videoTimelineView = VideoTimelineView()
-        videoTimelineView.frame = layout().timeline
-        videoTimelineView.new(asset:asset)
-        videoTimelineView.playStatusReceiver = self
-        
-        videoTimelineView.repeatOn = true
-        videoTimelineView.setTrimIsEnabled(true)
-        videoTimelineView.setTrimmerIsHidden(false)
-        view.addSubview(videoTimelineView)
-        
-        videoTimelineView.moveTo(0, animate:false)
-        videoTimelineView.setTrim(start:5, end:10, seek:nil, animate:false)
-
-        
-        
-        ///Prepare playerView
-        let player = videoTimelineView.player!//You can also set another player like below
-        //let player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
-        //videoTimelineView.player = player
-        
-        let playerFrame = layout().player
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame.size = playerFrame.size
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
-        player.actionAtItemEnd   = AVPlayer.ActionAtItemEnd.none
-        
-        playerView.frame = playerFrame
-        playerView.layer.addSublayer(playerLayer)
-        view.addSubview(playerView)
-        
-        
-        
-        
-        ///Prepare playButton
-        playButton.frame = layout().button
-        playButton.addTarget(self,action:#selector(self.playButtonAction), for:.touchUpInside)
-        setPlayButtonImage()
-        view.addSubview(playButton)
         
     }
-    
-    override func viewDidLayoutSubviews() {
-        videoTimelineView.frame = layout().timeline
-        playerView.frame = layout().player
-        playerLayer.frame.size = playerView.frame.size
-        playButton.frame = layout().button
-        videoTimelineView.viewDidLayoutSubviews()
-    }
 
-    func layout() -> (timeline:CGRect, player:CGRect, button:CGRect) {
-        let timeline = CGRect(x: 0,y:view.frame.size.height * 0.6, width:view.frame.size.width, height:view.frame.size.height / 6)
-        let player = CGRect(x:0, y:40, width:view.frame.size.width, height:view.frame.size.height * 0.4)
-        let button = CGRect(x:(view.frame.size.width - 60) / 2, y:view.frame.size.height - 60, width:60, height:60)
-        return (timeline, player, button)
-    }
-    
-    var playButtonStatus:Bool = false
-    @objc func playButtonAction() {
-        playButtonStatus = !playButtonStatus
-        if playButtonStatus {
-            videoTimelineView.play()
-        } else {
-            videoTimelineView.stop()
+    func editVideo(at videoURL: URL, startTime: Double, endTime: Double, completion: @escaping (URL?, Error?) -> Void) {
+        let asset = AVURLAsset(url: videoURL)
+        let composition = AVMutableComposition() // 비디오 및 오디오를 조합하고 편집할 수 있는 프레임워크 클래스
+
+        guard let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid),
+              let audioTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) else {
+            completion(nil, NSError(domain: "com.example", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to create composition tracks"]))
+            return
         }
-        setPlayButtonImage()
-    }
-    
-    func setPlayButtonImage() {
-        if playButtonStatus {
-            self.playButton.setImage(UIImage(systemName: "pause.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .light, scale: .medium)), for: .normal)
-        } else {
-            self.playButton.setImage(UIImage(systemName: "play.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .light, scale: .medium)), for: .normal)
+
+        do {
+            let timeRange = CMTimeRange(start: CMTime(seconds: startTime, preferredTimescale: 1000),
+                                        end: CMTime(seconds: endTime, preferredTimescale: 1000))
+            
+            try videoTrack.insertTimeRange(timeRange, of: asset.tracks(withMediaType: .video)[0], at: .zero)
+            try audioTrack.insertTimeRange(timeRange, of: asset.tracks(withMediaType: .audio)[0], at: .zero)
+        } catch {
+            completion(nil, error)
+            return
+        }
+
+        let fileManager = FileManager.default
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("editedVideo.mp4")
+
+        if fileManager.fileExists(atPath: outputURL.path) {
+            try? fileManager.removeItem(at: outputURL)
+        }
+
+        guard let exportSession = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else {
+            completion(nil, NSError(domain: "com.example", code: 2, userInfo: [NSLocalizedDescriptionKey: "Failed to create export session"]))
+            return
+        }
+
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .mp4
+
+        exportSession.exportAsynchronously {
+            switch exportSession.status {
+            case .completed:
+                completion(outputURL, nil)
+            case .failed, .cancelled, .unknown, .waiting, .exporting:
+                if let error = exportSession.error {
+                    completion(nil, error)
+                }
+            @unknown default:
+                break
+            }
         }
     }
-    
-    func videoTimelineStopped() {
-        playButtonStatus = false
-        setPlayButtonImage()
-    }
-    
-    func videoTimelineMoved() {
-        let time = videoTimelineView.currentTime
-        print("time: \(time)")
-    }
-    
-    func videoTimelineTrimChanged() {
-        let trim = videoTimelineView.currentTrim()
-        print("start time: \(trim.start)")
-        print("end time: \(trim.end)")
-    }
 
+    func removeAudioFromVideo(videoURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+        let asset = AVURLAsset(url: videoURL)
+        let composition = AVMutableComposition()
 
+        guard let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else {
+            completion(nil, NSError(domain: "com.example", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to create video track"]))
+            return
+        }
+
+        do {
+            try videoTrack.insertTimeRange(CMTimeRange(start: .zero, duration: asset.duration),
+                                           of: asset.tracks(withMediaType: .video)[0],
+                                           at: .zero)
+        } catch {
+            completion(nil, error)
+            return
+        }
+
+        // 오디오 트랙 제거
+        asset.tracks(withMediaType: .audio).forEach { audioTrack in
+            let compositionAudioTrack = composition.addMutableTrack(withMediaType: .audio,
+                                                                    preferredTrackID: kCMPersistentTrackID_Invalid)
+            do {
+                try compositionAudioTrack?.insertTimeRange(CMTimeRange(start: .zero, duration: asset.duration),
+                                                          of: audioTrack,
+                                                          at: .zero)
+                composition.removeTrack(compositionAudioTrack!) // 오디오 트랙 제거
+            } catch {
+                completion(nil, error)
+                return
+            }
+        }
+
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("videoWithoutAudio.mp4")
+        let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
+
+        exporter?.outputURL = outputURL
+        exporter?.outputFileType = .mp4
+
+        exporter?.exportAsynchronously {
+            if let url = exporter?.outputURL, exporter?.status == .completed {
+                completion(url, nil)
+            } else if let error = exporter?.error {
+                completion(nil, error)
+            }
+        }
+    }
 }

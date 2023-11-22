@@ -17,6 +17,8 @@
 		568CF8382B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CF8372B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift */; };
 		568CF83A2B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CF8392B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift */; };
 		56E65FFD2B088FC90087669E /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E65FFC2B088FC90087669E /* EditViewController.swift */; };
+		56E660272B0E12270087669E /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E660262B0E12270087669E /* TimelineView.swift */; };
+		56E660292B0E1B230087669E /* video.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 56E660282B0E1B230087669E /* video.MP4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		568CF8372B0394B100AD978A /* CustomVideoCamera_SwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoCamera_SwiftUITests.swift; sourceTree = "<group>"; };
 		568CF8392B0394B100AD978A /* CustomVideoCamera_SwiftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoCamera_SwiftUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		56E65FFC2B088FC90087669E /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		56E660262B0E12270087669E /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		56E660282B0E1B230087669E /* video.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = video.MP4; path = "CustomVideoCamera-Swift/Assets.xcassets/video.dataset/video.MP4"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 		568CF80A2B0394AF00AD978A = {
 			isa = PBXGroup;
 			children = (
+				56E660282B0E1B230087669E /* video.MP4 */,
 				568CF8152B0394AF00AD978A /* CustomVideoCamera-Swift */,
 				568CF82C2B0394B100AD978A /* CustomVideoCamera-SwiftTests */,
 				568CF8362B0394B100AD978A /* CustomVideoCamera-SwiftUITests */,
@@ -106,6 +111,7 @@
 				568CF81A2B0394AF00AD978A /* ViewController.swift */,
 				568CF81C2B0394AF00AD978A /* Main.storyboard */,
 				56E65FFC2B088FC90087669E /* EditViewController.swift */,
+				56E660262B0E12270087669E /* TimelineView.swift */,
 				568CF81F2B0394B100AD978A /* Assets.xcassets */,
 				568CF8212B0394B100AD978A /* LaunchScreen.storyboard */,
 				568CF8242B0394B100AD978A /* Info.plist */,
@@ -236,6 +242,7 @@
 			files = (
 				568CF8232B0394B100AD978A /* LaunchScreen.storyboard in Resources */,
 				568CF8202B0394B100AD978A /* Assets.xcassets in Resources */,
+				56E660292B0E1B230087669E /* video.MP4 in Resources */,
 				568CF81E2B0394AF00AD978A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,6 +271,7 @@
 				56E65FFD2B088FC90087669E /* EditViewController.swift in Sources */,
 				568CF81B2B0394AF00AD978A /* ViewController.swift in Sources */,
 				568CF8172B0394AF00AD978A /* AppDelegate.swift in Sources */,
+				56E660272B0E12270087669E /* TimelineView.swift in Sources */,
 				568CF8192B0394AF00AD978A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
